@@ -6,8 +6,7 @@ dotenv.config({ path: path.join(__dirname, 'config', 'config.env') });
 
 const app = require('./app');
 const connectDB = require('./config/db');
-const serviceProviderRoutes = require('./routes/serviceProviders');
-const reviewRoutes = require('./routes/reviews');
+
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
