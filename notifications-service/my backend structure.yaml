@@ -1,0 +1,51 @@
+my backend structure
+backend
+-config
+    --db.js
+    --environment.js
+    --logger.js
+-controllers
+    --authController.js
+    --bookingController.js
+    --carController.js
+    --notificationController.js
+    --paymentController.js
+    --reviewController.js
+    --servicesController.js
+    --serviceProviderController.js
+    --userController.js
+-middleware
+    --async.js
+    --auth.js
+    --error.js
+    --upload.js
+    --validate.js
+-models
+    --Booking.js
+    --Car.js
+    --Notification.js
+    --Payment.js
+    --Review.js
+    --Service.js
+    --ServiceProvider.js
+    --User.js
+-routes
+    --authRoutes.js
+    --bookingRoutes.js
+    --carRoutes.js
+    --notificationRoutes.js
+    --paymentRoutes.js
+    --reviewRoutes.js
+    --serviceRoutes.js
+    --serviceProviderRoutes.js
+    --userRoutes.js
+-utils
+    --errorResponse.js
+    --jwtHelper.js
+    --mailer.js
+.env
+app.js
+package.json
+package-lock.json
+server.js
+
