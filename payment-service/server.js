@@ -16,7 +16,7 @@ cloudinary.config({
 // Connect to database
 connectDB();
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5009;
 
 
 app.delete('/api/v1/delete-image', async (req, res) => {
