@@ -16,6 +16,10 @@ services:
     build: ./user-service
     ports:
       - "5007:5007"
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "5009:5009"
 
   booking-service:
     build: ./booking-service

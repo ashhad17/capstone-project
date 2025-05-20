@@ -155,7 +155,7 @@ const CarDetails = () => {
     try {
       // First, create a Razorpay order on the backend
       const orderResponse = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/payment-cars/create-order`,
+        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-order-cars`,
         {
           amount: carDetails.price * 100, // Razorpay expects amount in paise
           currency: 'INR',
@@ -182,7 +182,7 @@ const CarDetails = () => {
           try {
             // Verify payment on backend
             const verifyResponse = await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/v1/payment-cars/verify`,
+              `${import.meta.env.VITE_API_URL}/api/v1/payments/verify-cars`,
               {
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_order_id: response.razorpay_order_id,

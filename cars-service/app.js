@@ -11,7 +11,6 @@ const errorHandler = require('./middleware/error');
 
 const cars = require('./routes/cars');
 
-const paymentCars = require('./routes/paymentCarsRoutes');
 // import * as cloudinary from 'cloudinary';
 const app = express();
 
@@ -55,7 +54,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Mount routers
 app.use('/api/v1/cars', cars);
 
-app.use('/api/v1/payment-cars', paymentCars);
 
 // Error handler middleware - should be after routes
 app.use(errorHandler);

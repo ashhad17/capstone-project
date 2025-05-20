@@ -12,6 +12,7 @@ app.use('/api/v1/notifications', createProxyMiddleware({ target: 'http://notific
 app.use('/api/v1/service-providers', createProxyMiddleware({ target: 'http://serviceprovider-service:5005/api/v1/service-providers', changeOrigin: true }));
 app.use('/api/v1/review', createProxyMiddleware({ target: 'http://review-service:5004/api/v1/review', changeOrigin: true }));
 app.use('/api/v1/services', createProxyMiddleware({ target: 'http://services-service:5006/api/v1/services', changeOrigin: true }));
+app.use('/api/v1/payments', createProxyMiddleware({ target: 'http://payment-service:5009/api/v1/payments', changeOrigin: true }));
 // Add more services...
 
 
