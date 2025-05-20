@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 // Load env vars
 dotenv.config({ path: path.join(__dirname, 'config', 'config.env') });
-
+const reviewRoutes = require('./routes/reviews');
 const app = require('./app');
 const connectDB = require('./config/db');
 
@@ -19,6 +19,7 @@ connectDB();
 
 const PORT = process.env.PORT || 5005;
 
+app.use('/api/v1/service-providers/:serviceProviderId/reviews', reviewRoutes);
 // Mount routers
 // app.use('/api/v1/service-providers', serviceProviderRoutes);
 app.delete('/api/v1/delete-image', async (req, res) => {

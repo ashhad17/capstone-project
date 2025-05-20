@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const path = require('path');
 const errorHandler = require('./middleware/error');
 
+const payments = require('./routes/paymentRoutes');
 const bookings = require('./routes/bookings');
 // import * as cloudinary from 'cloudinary';
 const app = express();
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
 
+app.use('/api/v1/payments', payments); 
 app.use('/api/v1/bookings', bookings);
 
 // Error handler middleware - should be after routes
