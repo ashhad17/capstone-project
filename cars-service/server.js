@@ -16,7 +16,6 @@ cloudinary.config({
 // Connect to database
 connectDB();
 
-const PORT = process.env.PORT || 5002;
 
 app.delete('/api/v1/delete-image', async (req, res) => {
   const { public_id } = req.body;
@@ -31,6 +30,8 @@ app.delete('/api/v1/delete-image', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete image' });
   }
 });
+const PORT = process.env.PORT || 5002;
+
 const server = app.listen(
   PORT,
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
