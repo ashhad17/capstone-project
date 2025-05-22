@@ -19,6 +19,30 @@ const {
 
 const { protect } = require('../middleware/auth');
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dquspyuhw',
+  api_key: '224371911834243',
+  api_secret:'kQN3bU5w3sftEEi4LsNkbUAdCLM'
+});
+// Connect to database
+// connectDB();
+
+
+router.delete('/api/v1/delete-image', async (req, res) => {
+  const { public_id } = req.body;
+  try {
+    const result = await cloudinary.uploader.destroy(public_id);
+    console.log(result);
+    if (result.result !== 'ok') {
+      return res.status(400).json({ error: 'Failed to delete image' });
+    }
+    res.json(result);
+  } catch (error) {
+    console.error('Cloudinary Delete Error:', error);
+    res.status(500).json({ error: error.message || 'Failed to delete image' });
+  }  
+});
 // @route   POST /api/v1/auth/register
 // @desc    Register user
 // @access  Public

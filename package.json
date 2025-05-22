@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "install:all": "concurrently \"npm install --prefix user-service\" \"npm install --prefix payment-service\" \"npm install --prefix booking-service\" \"npm install --prefix cars-service\" \"npm install --prefix service-provider-service\" \"npm install --prefix services-service\" \"npm install --prefix notifications-service\" \"npm install --prefix review-service\" \"npm install --prefix auth-service\" \"npm install --prefix api-gateway\" \"npm install --prefix frontend\"",  
-  "dev": "concurrently \"npm run dev --prefix user-service\" \"npm run dev --prefix payment-service\" \"npm run dev --prefix booking-service\" \"npm run dev --prefix cars-service\" \"npm run dev --prefix service-provider-service\" \"npm run dev --prefix services-service\" \"npm run dev --prefix notifications-service\" \"npm run dev --prefix review-service\" \"npm run dev --prefix frontend\" \"npm run dev --prefix auth-service\" \"npm run dev --prefix api-gateway\""
-},
+    "install:all": "concurrently \"npm install --prefix user-service\" \"npm install --prefix payment-service\" \"npm install --prefix booking-service\" \"npm install --prefix cars-service\" \"npm install --prefix service-provider-service\" \"npm install --prefix services-service\" \"npm install --prefix notifications-service\" \"npm install --prefix review-service\" \"npm install --prefix auth-service\" \"npm install --prefix api-gateway\" \"npm install --prefix frontend\"",
+    "dev": "concurrently \"npm run dev --prefix user-service\" \"npm run dev --prefix payment-service\" \"npm run dev --prefix booking-service\" \"npm run dev --prefix cars-service\" \"npm run dev --prefix service-provider-service\" \"npm run dev --prefix services-service\" \"npm run dev --prefix notifications-service\" \"npm run dev --prefix review-service\" \"npm run dev --prefix frontend\" \"npm run dev --prefix auth-service\" \"npm run dev --prefix api-gateway\""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ashhad17/capstone-microservice.git"
@@ -21,5 +21,8 @@
   "homepage": "https://github.com/ashhad17/capstone-microservice#readme",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }

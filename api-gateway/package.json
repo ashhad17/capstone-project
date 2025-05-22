@@ -13,10 +13,13 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "capstone-microservice": "file:..",
     "cloudinary": "^2.6.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "http-proxy-middleware": "^3.0.5",
+    "mongoose": "^8.15.0",
     "nodeman": "^1.1.2"
   }
 }

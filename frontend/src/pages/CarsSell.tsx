@@ -426,7 +426,8 @@ const CarsSell = () => {
     setFormData({ ...formData, features: newFeatures });
   };
   
-  const nextStep = () => {
+  const nextStep = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!validateCurrentStep()) return;
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);

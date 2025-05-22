@@ -25,7 +25,7 @@ exports.getNotifications = async (req, res, next) => {
 
     // Executing query
     const notifications = await query;
-    console.log('Found notifications:', notifications);
+    // console.log('Found notifications:', notifications);
 
     // Pagination result
     const pagination = {};

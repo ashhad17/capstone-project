@@ -201,15 +201,6 @@ const CarEditModal: React.FC<CarEditModalProps> = ({
         });
       }
 
-      // Prepare seller information from contact fields
-      const updatedSeller = {
-        ...formData.seller,
-        // name: formData.contactName || formData.seller.name,
-        // email: formData.contactEmail || formData.seller.email,
-        // phone: formData.contactPhone || formData.seller.phone,
-        // location: formData.location || formData.seller.location,
-      };
-
       // Update the listing with both existing and new images, and documents
       const updatedData = {
         ...formData,
@@ -217,7 +208,8 @@ const CarEditModal: React.FC<CarEditModalProps> = ({
         ...(uploadedDocuments.rcDocument && { rcDocument: uploadedDocuments.rcDocument }),
         ...(uploadedDocuments.insuranceDocument && { insuranceDocument: uploadedDocuments.insuranceDocument }),
         ...(uploadedDocuments.pucDocument && { pucDocument: uploadedDocuments.pucDocument }),
-        seller: updatedSeller,
+        // Keep the original seller ID
+        seller: listing.seller._id,
         // Remove temporary contact fields
         contactName: undefined,
         contactEmail: undefined,

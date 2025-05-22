@@ -16,6 +16,32 @@ const app = express();
 // Body parser
 app.use(express.json());
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dquspyuhw',
+  api_key: '224371911834243',
+  api_secret:'kQN3bU5w3sftEEi4LsNkbUAdCLM'
+});
+// Connect to database
+// connectDB();
+
+
+app.delete('/api/v1/delete-image', async (req, res) => {
+  const { public_id } = req.body;
+  try {
+    const result = await cloudinary.uploader.destroy(public_id);
+    console.log(result);
+    if (result.result !== 'ok') {
+      return res.status(400).json({ error: 'Failed to delete image' });
+    }
+    res.json(result);
+  } catch (error) {
+    console.error('Cloudinary Delete Error:', error);
+    res.status(500).json({ error: error.message || 'Failed to delete image' });
+  }  
+});
+
+
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

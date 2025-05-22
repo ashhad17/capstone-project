@@ -164,27 +164,97 @@ exports.createCar = async (req, res, next) => {
 // @desc    Update car listing
 // @route   PUT /api/v1/cars/:id
 // @access  Private
+// exports.updateCar = async (req, res, next) => {
+//   try {
+//     let car = await Car.findById(req.params.id);
+
+//     if (!car) {
+//       return next(
+//         new ErrorResponse(`Car not found with id of ${req.params.id}`, 404)
+//       );
+//     }
+
+//     // Make sure user is car owner or admin
+//     if (car.seller.toString() !== req.user.id && req.user.role !== 'admin') {
+//       return next(
+//         new ErrorResponse(
+//           `User ${req.user.id} is not authorized to update this listing`,
+//           403
+//         )
+//       );
+//     }
+
+//     // Validate and parse images
+//     if (typeof req.body.images === 'string') {
+//       try {
+//         const parsedImages = JSON.parse(req.body.images);
+//         if (Array.isArray(parsedImages) && parsedImages.every(img => img.url && img.publicId)) {
+//           req.body.images = parsedImages;
+//         } else {
+//           return next(new ErrorResponse('Invalid image format', 400));
+//         }
+//       } catch (err) {
+//         return next(new ErrorResponse('Failed to parse images JSON', 400));
+//       }
+//     }
+
+//     // Validate new fields
+//     if (req.body.fuelType && !['Gasoline', 'Diesel', 'Hybrid', 'Electric', 'Other'].includes(req.body.fuelType)) {
+//       return next(new ErrorResponse('Invalid fuel type', 400));
+//     }
+
+//     if (req.body.transmission && !['Automatic', 'Manual', 'CVT', 'Semi-Automatic'].includes(req.body.transmission)) {
+//       return next(new ErrorResponse('Invalid transmission type', 400));
+//     }
+
+//     // Parse document uploads
+//     ['rcDocument', 'insuranceDocument', 'pucDocument'].forEach(field => {
+//       if (typeof req.body[field] === 'string') {
+//         try {
+//           req.body[field] = JSON.parse(req.body[field]);
+//         } catch (err) {
+//           return next(new ErrorResponse(`Invalid ${field} format`, 400));
+//         }
+//       }
+//     });
+
+//     // Update title if year, make or model changes
+//     if (req.body.year || req.body.make || req.body.model) {
+//       const year = req.body.year || car.year;
+//       const make = req.body.make || car.make;
+//       const model = req.body.model || car.model;
+//       req.body.title = `${year} ${make} ${model}`;
+//     }
+
+//     car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//       runValidators: true
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       data: car
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 exports.updateCar = async (req, res, next) => {
   try {
     let car = await Car.findById(req.params.id);
 
     if (!car) {
-      return next(
-        new ErrorResponse(`Car not found with id of ${req.params.id}`, 404)
-      );
+      return next(new ErrorResponse(`Car not found with id of ${req.params.id}`, 404));
     }
 
     // Make sure user is car owner or admin
     if (car.seller.toString() !== req.user.id && req.user.role !== 'admin') {
       return next(
-        new ErrorResponse(
-          `User ${req.user.id} is not authorized to update this listing`,
-          403
-        )
+        new ErrorResponse(`User ${req.user.id} is not authorized to update this listing`, 403)
       );
     }
 
-    // Validate and parse images
+    // Parse images if sent as string
     if (typeof req.body.images === 'string') {
       try {
         const parsedImages = JSON.parse(req.body.images);
@@ -198,7 +268,7 @@ exports.updateCar = async (req, res, next) => {
       }
     }
 
-    // Validate new fields
+    // Validate fuel type and transmission
     if (req.body.fuelType && !['Gasoline', 'Diesel', 'Hybrid', 'Electric', 'Other'].includes(req.body.fuelType)) {
       return next(new ErrorResponse('Invalid fuel type', 400));
     }
@@ -218,27 +288,32 @@ exports.updateCar = async (req, res, next) => {
       }
     });
 
-    // Update title if year, make or model changes
-    if (req.body.year || req.body.make || req.body.model) {
-      const year = req.body.year || car.year;
-      const make = req.body.make || car.make;
-      const model = req.body.model || car.model;
-      req.body.title = `${year} ${make} ${model}`;
-    }
-
-    car = await Car.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
+    // Merge updates into the existing car object
+    Object.keys(req.body).forEach(key => {
+      if (key === 'seller' && typeof req.body.seller === 'object' && req.body.seller._id) {
+        car.seller = req.body.seller._id;
+      } else if (req.body[key] !== undefined) {
+        car[key] = req.body[key];
+      }
     });
+
+    // Update title if year/make/model changed
+    const year = car.year;
+    const make = car.make;
+    const model = car.model;
+    car.title = `${year} ${make} ${model}`;
+
+    await car.save();
 
     res.status(200).json({
       success: true,
-      data: car
+      data: car,
     });
   } catch (err) {
     next(err);
   }
 };
+
 // @desc    Get single car listing
 // @route   GET /api/v1/cars/:id
 // @access  Public
